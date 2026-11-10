@@ -1,0 +1,284 @@
+/* 5DRAGONS // PREMIUM MOTION SYSTEM
+   Single animation layer. No page-transition overlay, no duplicate timelines.
+   All motion is decorative and never controls application logic.
+*/
+
+:root{
+  --motion-ease:cubic-bezier(.16,1,.3,1);
+  --motion-smooth:cubic-bezier(.22,1,.36,1);
+}
+
+/* ---------- core keyframes ---------- */
+@keyframes fiveHeroIn{
+  0%{opacity:0;transform:translate3d(0,34px,0) scale(.975);filter:blur(10px)}
+  60%{opacity:1;transform:translate3d(0,-3px,0) scale(1.005);filter:blur(0)}
+  100%{opacity:1;transform:none;filter:none}
+}
+@keyframes fiveTextIn{
+  0%{opacity:0;transform:translate3d(0,22px,0);filter:blur(7px)}
+  100%{opacity:1;transform:none;filter:none}
+}
+@keyframes fiveRise{
+  0%{opacity:0;transform:translate3d(0,28px,0) scale(.985);filter:blur(6px)}
+  100%{opacity:1;transform:none;filter:none}
+}
+@keyframes fiveImageIn{
+  0%{opacity:0;transform:scale(1.045);filter:brightness(.55) saturate(.7);clip-path:inset(0 10% 0 10%)}
+  100%{opacity:1;transform:none;filter:none;clip-path:inset(0 0 0 0)}
+}
+@keyframes fiveLine{
+  0%{transform:scaleX(0);opacity:0}
+  25%{opacity:1}
+  100%{transform:scaleX(1);opacity:1}
+}
+@keyframes fivePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(229,9,20,.25)}
+  50%{box-shadow:0 0 0 7px rgba(229,9,20,0)}
+}
+@keyframes fiveFloat{
+  0%,100%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(-16px,12px,0) scale(1.035)}
+}
+@keyframes fiveOrb{
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
+  50%{transform:translate3d(12px,-14px,0) rotate(1deg)}
+}
+@keyframes fiveSweep{
+  0%{transform:translateX(-130%) skewX(-18deg);opacity:0}
+  18%{opacity:.9}
+  100%{transform:translateX(560%) skewX(-18deg);opacity:0}
+}
+@keyframes fiveScan{
+  0%{transform:translateY(-120%);opacity:0}
+  12%{opacity:.25}
+  80%{opacity:.06}
+  100%{transform:translateY(650%);opacity:0}
+}
+@keyframes fiveGlow{
+  0%,100%{opacity:.35}
+  50%{opacity:1}
+}
+@keyframes fiveNavIn{
+  0%{opacity:0;transform:translateY(-12px)}
+  100%{opacity:1;transform:none}
+}
+
+/* ---------- first paint ---------- */
+.nav{
+  animation:fiveNavIn .7s var(--motion-ease) both;
+}
+.hero .container{
+  animation:fiveHeroIn .95s var(--motion-ease) both;
+}
+.hero .tag{
+  animation:fiveRise .65s .06s var(--motion-ease) both;
+}
+.hero h1{
+  animation:fiveTextIn .85s .12s var(--motion-ease) both;
+}
+.hero p{
+  animation:fiveTextIn .75s .22s var(--motion-ease) both;
+}
+.hero-actions,.hero-meta{
+  animation:fiveRise .75s .32s var(--motion-ease) both;
+}
+.hero .container:after{
+  animation:fiveScan 7s linear infinite;
+}
+.hero:before{
+  animation:fiveOrb 12s ease-in-out infinite;
+}
+.hero-orb-a{
+  animation:fiveOrb 13s ease-in-out infinite;
+}
+.hero-orb-b{
+  animation:fiveFloat 7s ease-in-out infinite;
+}
+.tag:before,.hero-meta i{
+  animation:fivePulse 2.4s ease-in-out infinite;
+}
+
+/* ---------- premium section rhythm ---------- */
+.section-head{
+  animation:fiveRise .72s .04s var(--motion-ease) both;
+}
+.section-title:after,.page-title:after{
+  animation:fiveLine .75s .18s var(--motion-ease) both;
+}
+.section-head>a{
+  transition:transform .45s var(--motion-ease),color .45s var(--motion-ease);
+}
+
+/* ---------- cards ---------- */
+.grid .card{
+  animation:fiveRise .78s var(--motion-ease) both;
+  animation-delay:calc(var(--card-index,0) * 70ms);
+}
+.grid .card:nth-child(2){--card-index:1}
+.grid .card:nth-child(3){--card-index:2}
+.grid .card:nth-child(4){--card-index:3}
+.grid .card:nth-child(5){--card-index:4}
+.grid .card:nth-child(6){--card-index:5}
+
+.card{
+  --mx:50%;
+  --my:50%;
+  transition:
+    transform .55s var(--motion-ease),
+    border-color .55s var(--motion-ease),
+    box-shadow .55s var(--motion-ease),
+    background .55s var(--motion-ease);
+}
+.card:before{
+  background:
+    radial-gradient(420px 240px at var(--mx) var(--my),rgba(229,9,20,.11),transparent 62%),
+    linear-gradient(120deg,rgba(255,255,255,.035),transparent 40%);
+}
+.card:after{
+  transition:opacity .45s ease,box-shadow .45s ease;
+}
+.card:hover{
+  transform:translate3d(0,-9px,0) scale(1.008);
+}
+.card:hover:after{
+  opacity:1;
+  box-shadow:0 0 24px rgba(229,9,20,.55);
+}
+.card img{
+  animation:fiveImageIn .85s .1s var(--motion-ease) both;
+  transition:transform .7s var(--motion-ease),filter .7s var(--motion-ease);
+}
+.card:hover img{
+  transform:scale(1.045);
+  filter:saturate(1.08) contrast(1.03);
+}
+
+/* moving glass highlight */
+.card,.glass-panel,.cta-panel,.stat-strip,.table-wrap{
+  position:relative;
+  isolation:isolate;
+}
+.card:where(.glass-panel),.glass-panel:before{
+  pointer-events:none;
+}
+.card:after{
+  z-index:2;
+}
+.card .tag{
+  position:relative;
+}
+
+/* ---------- scroll reveal, activated only by JS ---------- */
+.scroll-reveal{
+  opacity:0;
+  transform:translate3d(0,34px,0) scale(.988);
+  filter:blur(7px);
+  transition:
+    opacity .72s var(--motion-ease),
+    transform .82s var(--motion-ease),
+    filter .72s var(--motion-ease);
+  transition-delay:var(--reveal-delay,0ms);
+}
+.scroll-reveal.is-visible{
+  opacity:1;
+  transform:none;
+  filter:none;
+}
+.scroll-reveal:nth-child(2){--reveal-delay:55ms}
+.scroll-reveal:nth-child(3){--reveal-delay:110ms}
+.scroll-reveal:nth-child(4){--reveal-delay:165ms}
+.scroll-reveal:nth-child(5){--reveal-delay:220ms}
+.scroll-reveal:nth-child(6){--reveal-delay:275ms}
+
+/* ---------- homepage premium details ---------- */
+.home-intro .intro-copy{
+  animation:fiveRise .85s .1s var(--motion-ease) both;
+}
+.principle{
+  transition:transform .5s var(--motion-ease),border-color .5s ease,background .5s ease;
+}
+.principle:hover{
+  transform:translateX(7px);
+  border-color:rgba(229,9,20,.28);
+}
+.stat-strip>div{
+  transition:transform .45s var(--motion-ease),background .45s ease;
+}
+.stat-strip>div:hover{
+  transform:translateY(-5px);
+  background:rgba(229,9,20,.035);
+}
+
+/* ---------- buttons / inputs ---------- */
+.btn{
+  transition:transform .45s var(--motion-ease),box-shadow .45s var(--motion-ease),border-color .45s ease,background .45s ease;
+}
+.btn:after{
+  animation:none;
+}
+.btn:hover:after{
+  animation:fiveSweep .85s var(--motion-ease) both;
+}
+.field input,.field textarea,.field select{
+  transition:transform .4s var(--motion-ease),border-color .4s ease,box-shadow .4s var(--motion-ease);
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  transform:translateY(-2px);
+}
+
+/* ---------- navigation ---------- */
+.links a{
+  transition:color .35s ease,background .35s ease,transform .35s var(--motion-ease);
+}
+.links a:after{
+  transition:transform .45s var(--motion-ease);
+}
+.brand img{
+  transition:transform .55s var(--motion-ease),filter .55s ease,opacity .3s ease;
+}
+.brand:hover img{
+  transform:scale(1.025);
+}
+
+/* ---------- article / table ---------- */
+.article img{
+  transition:transform .7s var(--motion-ease),box-shadow .7s ease,border-color .5s ease;
+}
+.article img:hover{
+  transform:scale(1.012);
+  border-color:rgba(229,9,20,.3);
+  box-shadow:0 42px 110px rgba(0,0,0,.7),0 0 35px rgba(229,9,20,.08);
+}
+.table tbody tr{
+  transition:background .3s ease,transform .3s var(--motion-ease);
+}
+.table tbody tr:hover{
+  background:rgba(229,9,20,.035);
+}
+
+/* ---------- footer ---------- */
+.footer{
+  animation:fiveRise .8s .05s var(--motion-ease) both;
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-delay:0ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+  .scroll-reveal{
+    opacity:1!important;
+    transform:none!important;
+    filter:none!important;
+  }
+}
+
+/* ---------- mobile safety ---------- */
+@media (max-width:900px){
+  .grid .card{animation-delay:0ms}
+  .principle:hover{transform:none}
+}
